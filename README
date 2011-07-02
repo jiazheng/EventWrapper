@@ -1,0 +1,1 @@
+将百度地图API事件通过包装，以和google map api相同的API对外暴露。
