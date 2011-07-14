@@ -1,6 +1,7 @@
 /**
  * 百度地图API事件包装器，以类似google map api事件调用
  * 方式使用百度地图API
+ * 此代码使用closure compiler压缩
  * @author JZ
  * @version 1.0
  */
@@ -9,9 +10,9 @@
 /**
  * 命名空间
  */
-window.EventWrapper = window.EventWrapper || {};
+window['EventWrapper'] = window['EventWrapper'] || {};
 
-var e = window.EventWrapper;
+var e = window['EventWrapper'];
 /**
  * 添加DOM事件监听函数
  * @param HTMLElement DOM元素
@@ -19,7 +20,7 @@ var e = window.EventWrapper;
  * @param Function 事件处理函数
  * @returns MapsEventListener 事件监听对象
  */
-e.addDomListener = function(instance, eventName, handler) {
+e['addDomListener'] = function(instance, eventName, handler) {
     if (instance.addEventListener) {
         instance.addEventListener(eventName, handler, false);
     }
@@ -38,7 +39,7 @@ e.addDomListener = function(instance, eventName, handler) {
  * @param Function 事件处理函数
  * @returns MapsEventListener 事件监听对象
  */
-e.addDomListenerOnce = function(instance, eventName, handler) {
+e['addDomListenerOnce'] = function(instance, eventName, handler) {
     var eventListener = e.addDomListener(instance, eventName, function(){
         // 移除
         e.removeListener(instance, eventName, handler);
@@ -53,7 +54,7 @@ e.addDomListenerOnce = function(instance, eventName, handler) {
  * @param Function 事件处理函数
  * @returns MapsEventListener 事件监听对象
  */
-e.addListener = function(instance, eventName, handler) {
+e['addListener'] = function(instance, eventName, handler) {
     instance.addEventListener(eventName, handler);
     return new MapsEventListener(instance, eventName, handler, MapsEventListener.MAP_EVENT);
 };
@@ -64,7 +65,7 @@ e.addListener = function(instance, eventName, handler) {
  * @param Function 事件处理函数
  * @returns MapsEventListener 事件监听对象
  */
-e.addListenerOnce = function(instance, eventName, handler){
+e['addListenerOnce'] = function(instance, eventName, handler){
     var eventListener = e.addListener(instance, eventName, function(){
         // 移除
         e.removeListener(eventListener);
@@ -76,10 +77,10 @@ e.addListenerOnce = function(instance, eventName, handler){
  * 移除特定实例的所有事件的所有监听函数
  * @param Object
  */
-e.clearInstanceListeners = function(instance) {
+e['clearInstanceListeners'] = function(instance) {
     var listeners = instance._e_ || {};
     for (var i in listeners) {
-        e.removeListener(listeners[i]);
+        e['removeListener'](listeners[i]);
     }
     instance._e_ = {};
 };
@@ -88,11 +89,11 @@ e.clearInstanceListeners = function(instance) {
  * @param Object 实例
  * @param string 事件名
  */
-e.clearListeners = function(instance, eventName) {
+e['clearListeners'] = function(instance, eventName) {
     var listeners = instance._e_ || {};
     for (var i in listeners) {
         if (listeners[i]._eventName == eventName) {
-            e.removeListener(listeners[i]);
+            e['removeListener'](listeners[i]);
         }
     }
 };
@@ -100,7 +101,7 @@ e.clearListeners = function(instance, eventName) {
  * 移除特定的事件监听函数
  * @param MapsEventListener
  */
-e.removeListener = function(listener) {
+e['removeListener'] = function(listener) {
     var instance = listener._instance;
     var eventName = listener._eventName;
     var handler = listener._handler;
@@ -132,7 +133,7 @@ e.removeListener = function(listener) {
  * @param Object 实例
  * @param string 事件名称
  */
-e.trigger = function(instance, eventName) {
+e['trigger'] = function(instance, eventName) {
     var listeners = instance._e_ || {};
     for (var i in listeners) {
         if (listeners[i]._eventName == eventName) {
@@ -144,6 +145,7 @@ e.trigger = function(instance, eventName) {
 
 /**
  * 事件监听对象
+ * @private
  * @param Object 对象实例
  * @param string 事件名称
  * @param Function 事件监听函数
