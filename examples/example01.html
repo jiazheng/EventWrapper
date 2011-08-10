@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>EventWrapper</title>
+<script src="http://api.map.baidu.com/api?v=1.2"></script>
+<script src="../release/eventwrapper.min.js"></script>
+</head>
+<body>
+<div id="map" style="width:500px;height:320px"></div>
+<div id="div2">ssdf</div>
+<script>
+var map = new BMap.Map('map');
+map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+var mkr = new BMap.Marker(map.getCenter());
+map.addOverlay(mkr);
+
+var listener1 = EventWrapper.addListener(map, 'click', function(e){
+    console.log(1);
+});
+EventWrapper.addListener(map, 'click', function(e){
+    console.log(2);
+});
+EventWrapper.addListener(map, 'dragstart', function(e){
+    console.log(3);
+});
+var mkrLis = EventWrapper.addListener(mkr, 'click', function(e, ee){
+    console.log(e);console.log(ee);
+});
+EventWrapper.addDomListener(document.getElementById('div2'), 'click', function(e){
+    console.log(e);
+});
+</script>
+</body>
+</html>
